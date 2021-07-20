@@ -1,0 +1,41 @@
+version: "3.3"
+services:
+  laravel_pilot_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        PORT: 80
+    ports:
+      - 8080:80
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - laravel_pg
+    environment:
+      DEBUG: 'true'
+    networks:
+      laravel_net:
+        ipv4_address: 182.28.1.1
+
+  laravel_pg:
+    image: postgres:12.3-alpine
+    ports:
+    - 8432:5432
+    volumes:
+      - db_data:/var/lib/postgres
+    environment:
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: laravel_pilot_app
+    networks:
+      laravel_net:
+        ipv4_address: 182.28.1.2
+
+volumes:
+  db_data: {}
+networks:
+  laravel_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 182.28.0.0/16
