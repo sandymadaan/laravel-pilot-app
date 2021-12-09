@@ -1,0 +1,53 @@
+version: 2
+notify:
+  webhooks:
+    # A list of hashes representing hooks. Only the url field is supported.
+    - url: https://api.reviewee.it/notification/ci
+jobs:
+  build:
+    working_directory: ~/laravel-pilot-app
+    docker:
+      - image: sandymadaan/php8.0-apache:latest
+      - image: postgres:13.3-alpine
+        environment:
+          POSTGRES_PASSWORD: postgres
+    environment:
+      - CIRCLE_PROJECT_REPONAME: laravel-pilot-app
+
+    steps:
+      - run:
+          name: Composer Version
+          command: |
+            composer --version
+    - checkout
+      - restore_cache:
+          keys:
+            - composer-v1-{{ checksum "composer.lock" }}
+            - composer-v1-
+      - run:
+          name: Install Composer
+          command: |
+            composer install -n --prefer-dist
+      - save_cache:
+          key: composer-v1-{{ checksum "composer.lock" }}
+          paths:
+            - vendor
+      - run:
+        name: Run newman
+        command: newman run https://api.getpostman.com/collections/${POSTMAN_COLLECTION_ID}?apikey=${POSTMAN_API_KEY} -e https://api.getpostman.com/environments/${POSTMAN_ENV_ID}?apikey=${POSTMAN_API_KEY}
+      - run:
+         name: Heroku Staging Deploy
+         command: git push --force https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_UAT_APP_NAME.git HEAD:refs/heads/master
+
+workflows:
+  version: 2
+  validate-and-deploy:
+    jobs:
+      - api_tests:
+          filters:
+            branches:
+              only:
+                - master
+      - build:
+          requires:
+            - api_tests

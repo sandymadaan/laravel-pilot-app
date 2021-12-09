@@ -11,6 +11,17 @@ use JWTAuth;
 
 class authTest extends TestCase
 {
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->faker = Faker::create();
+
+        $this->user_data = [
+            'email' => $this->faker->email,
+            'password' => 'abc@123'
+        ];
+    }
+    
     /**
     * Login as default API user and get token back.
     *

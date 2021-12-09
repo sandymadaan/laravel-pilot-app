@@ -1,8 +1,6 @@
-FROM sandymadaan/php7.4:0.1
+FROM sandymadaan/php8.0-apache:latest
 
 RUN service apache2 restart
-
-RUN docker-php-ext-install gd
 
 COPY . /var/www/html
 
@@ -15,6 +13,4 @@ RUN sed -ri -e 's!/var/www/!/var/www/html/public!g' /etc/apache2/apache2.conf /e
 RUN usermod -u 1000 www-data && groupmod -g 1000 www-data
 
 RUN a2enmod rewrite
-
-RUN cp .env.example .env
 
