@@ -33,10 +33,6 @@ jobs:
           paths:
             - vendor
       - run:
-          name: Migrate
-          command: |
-            php artisan migrate
-      - run:
           name: Run newman
           command: newman run https://api.getpostman.com/collections/${POSTMAN_COLLECTION_ID}?apikey=${POSTMAN_API_KEY} -e https://api.getpostman.com/environments/${POSTMAN_ENV_ID}?apikey=${POSTMAN_API_KEY}
       - run:
