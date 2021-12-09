@@ -33,6 +33,11 @@ jobs:
           paths:
             - vendor
       - run:
+          name: "Start Service and Check That it’s Running"
+          command: |
+            docker run -d --name my-app my-app
+            docker exec my-app curl --retry 10 --retry-connrefused http://localhost:8080
+      - run:
           name: Run newman
           command: newman run https://api.getpostman.com/collections/${POSTMAN_COLLECTION_ID}?apikey=${POSTMAN_API_KEY} -e https://api.getpostman.com/environments/${POSTMAN_ENV_ID}?apikey=${POSTMAN_API_KEY}
       - run:
