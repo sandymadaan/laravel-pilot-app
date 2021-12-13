@@ -9,5 +9,5 @@ jobs:
     steps:
         - checkout
         - run: docker-compose up -d
-        - run: docker-compose exec php composer install -n --prefer-dist
+        - run: docker-compose exec composer install -n --prefer-dist
         - run: newman run https://api.getpostman.com/collections/${POSTMAN_COLLECTION_ID}?apikey=${POSTMAN_API_KEY} -e https://api.getpostman.com/environments/${POSTMAN_ENV_ID}?apikey=${POSTMAN_API_KEY}
