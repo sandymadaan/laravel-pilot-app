@@ -14,7 +14,7 @@ services:
       - laravel_pg
     environment:
       DEBUG: 'true'
-      APP_URL: 'http://210.101.1.1'
+      APP_KEY: 'base64:giaCwWbP4/+BgqwHlpUNxea3yPVTyeHl1P5m430WNCo='
       DB_CONNECTION: pgsql
       DB_HOST: 182.28.1.2
       DB_PORT: 5432
