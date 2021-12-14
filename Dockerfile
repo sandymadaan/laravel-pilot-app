@@ -1,4 +1,4 @@
-FROM sandymadaan/php8.0-apache:latest
+FROM sandymadaan/php8.1-apache:latest
 
 RUN service apache2 restart
 

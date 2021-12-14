@@ -7,6 +7,10 @@ jobs:
         - CIRCLE_PROJECT_REPONAME: laravel-pilot-app
 
     steps:
+        - run: |
+            if [[ ${CIRCLE_SHELL_ENV} =~ "localbuild" ]]; then
+                mkdir -p /tmp
+            fi
         - checkout
         - run: docker-compose up -d
         - run: docker-compose exec laravel_pilot_app composer install -n --prefer-dist
