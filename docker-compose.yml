@@ -14,13 +14,6 @@ services:
       - laravel_pg
     environment:
       DEBUG: 'true'
-      APP_KEY: 'base64:giaCwWbP4/+BgqwHlpUNxea3yPVTyeHl1P5m430WNCo='
-      DB_CONNECTION: pgsql
-      DB_HOST: 182.28.1.2
-      DB_PORT: 5432
-      DB_DATABASE: 'laravel_pilot_app'
-      DB_USERNAME: 'postgres'
-      DB_PASSWORD: 'docker'
     networks:
       laravel_net:
         ipv4_address: 182.28.1.1
