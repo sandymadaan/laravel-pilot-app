@@ -12,6 +12,7 @@ services:
       - .:/var/www/html
     depends_on:
       - laravel_pg
+      - newman
     environment:
       DEBUG: 'true'
     networks:
@@ -30,6 +31,9 @@ services:
     networks:
       laravel_net:
         ipv4_address: 182.28.1.2
+
+  newman:
+    image: postman/newman
 
 volumes:
   db_data: {}
