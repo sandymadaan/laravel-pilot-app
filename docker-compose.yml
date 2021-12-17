@@ -12,7 +12,7 @@ services:
       - .:/var/www/html
     depends_on:
       - laravel_pg
-      - newman
+      - newman_local
     environment:
       DEBUG: 'true'
     networks:
